@@ -41,3 +41,7 @@ backend/uploads/*
 *.pem
 *.key
 *.cert
+
+# Sensitive documents
+**/*.pdf
+frontend/public/images/*.pdf

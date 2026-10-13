@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* Tailwind v4 defaults `dark:` to the OS prefers-color-scheme media query.
+   This app toggles a `.dark` class on <html> instead, so we opt into the
+   class-based strategy — without this, ThemeContext's toggle has no effect. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #1A3C6E;
+  --color-secondary: #2E7DC4;
+  --color-accent: #0FA3B1;
+  --color-muted: #5A6E82;
+  --color-ink: #1C2B3A;
+  --color-surface: #F7F9FC;
+}
+
+.dark {
+  --color-muted: #94A3B8;
+  --color-ink: #E7ECF3;
+  --color-surface: #0B1220;
+  /* #1A3C6E (~1.7:1 on the dark surface) is unreadable as bare text/icon
+     color — this app uses text-primary/border-primary as a standalone
+     foreground in ~25 places (icon badges, links, active nav states),
+     not just as a white-on-navy button fill. Lighten it for dark mode;
+     white-on-fill contrast stays a healthy ~5.4:1 with this value. */
+  --color-primary: #3E6BA8;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: #c5d0dc; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+  .dark ::-webkit-scrollbar-track { background: #131c2e; }
+  .dark ::-webkit-scrollbar-thumb { background: #2b3a52; }
+  .dark ::-webkit-scrollbar-thumb:hover { background: var(--color-secondary); }
+}
