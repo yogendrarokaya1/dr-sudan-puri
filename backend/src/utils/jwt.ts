@@ -4,7 +4,7 @@ import { config } from "../config/env.config";
 
 export const signToken = (payload: IUserPayload): string => {
   const options: SignOptions = {
-    expiresIn: config.jwt.expiresIn,
+    expiresIn: config.jwt.expiresIn as SignOptions["expiresIn"],
   };
   return jwt.sign(payload as object, config.jwt.secret, options);
 };
